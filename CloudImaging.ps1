@@ -1,10 +1,10 @@
 #=====================================================================================================
 # Created on:   10.04.2021
 # Created by:   Mattias Melkersen
-# Version:	    0.2 
+# Version:	    0.3 
 # Mail:         mm@mindcore.dk
 # Twitter:      MMelkersen
-# Function:     Sample script to get started with OSDBuilder and build Zero Touch deployments with no infrastructure.
+# Function:     Sample script to get started with OSDCloud and build Zero Touch deployments with no infrastructure.
 # 
 # Requirement:
 # ADK needs to be installed.
