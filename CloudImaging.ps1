@@ -9,6 +9,11 @@
 # Requirement:
 # ADK needs to be installed.
 #
+# Blogpost to learn from
+# https://osdcloud.osdeploy.com/get-started/
+# https://blog.mindcore.dk/2021/03/osdcloud-image-devices-without-need-of.html
+# https://www.osdsune.com/home/blog/2021/osdcloud-zti-way
+#
 # This script is provided As Is
 # Compatible with Windows 10 and later
 #=====================================================================================================
