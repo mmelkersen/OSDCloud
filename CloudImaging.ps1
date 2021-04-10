@@ -4,7 +4,7 @@
 # Version:	    0.3 
 # Mail:         mm@mindcore.dk
 # Twitter:      MMelkersen
-# Function:     Sample script to get started with OSDCloud and build Zero Touch deployments with no infrastructure.
+# Function:     Sample script to get started with OSDCloud and build deployments with no infrastructure.
 # 
 # Requirement:
 # ADK needs to be installed.
@@ -12,14 +12,12 @@
 # Blogpost to learn from
 # https://osdcloud.osdeploy.com/get-started/
 # https://blog.mindcore.dk/2021/03/osdcloud-image-devices-without-need-of.html
-# https://www.osdsune.com/home/blog/2021/osdcloud-zti-way
 #
 # This script is provided As Is
 # Compatible with Windows 10 and later
 #=====================================================================================================
 
 $MyWorkspace = "C:\OSDCloud"
-$Mountpath = "C:\Temp\Mount_Image"
 
 Install-Module -Name OSD -force
 Import-Module OSD
@@ -65,36 +63,3 @@ New-OSDCloud.iso -workspacepath $MyWorkspace
 #New-OSDCloud.usb -workspacepath $MyWorkspace
 
 #save-OSDCloud.usb 
-
-#This section will create ZTI ISO file
-mkdir $Mountpath
-dism /mount-wim /wimfile:$MyWorkspace\Media\sources\boot.wim /index:1 /mountDir:$Mountpath
-
-$StartnetCMDpath = "$($Mountpath)\Windows\System32\startnet.cmd"
-
-$StartnetCMD = @'
-    cls
-
-    @ECHO OFF
-    Color 0E
-
-    ECHO.
-    ECHO Loading OSDCloud... Please Wait
-    ECHO.
-
-    :: Set Configuration ::
-    Set OSBuild="20H2"
-    Set OSEdition="Enterprise"
-    Set Culture="da-dk"
-    Set DisplayRes="1600"
-
-    :: Do NOT configure below this line. ::
-    %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference = 'SilentlyContinue'; (new-object -COM Shell.Application).NameSpace(17).ParseName('D:').InvokeVerb('Eject'); Install-Module OSD -Force; Set-DisRes '%DisplayRes%'; Start-OSDCloud -OSBuild '%OSBuild%' -OSEdition '%OSEdition%' -Culture '%Culture%' -ZTI"
-'@
-
-Add-Content $StartnetCMDpath "`n$StartnetCMD"
-
-dism /unmount-wim /mountDir:$Mountpath /commit
-
-#Creates ISO file for Hyper-v to boot on
-New-OSDCloud.iso -workspacepath $MyWorkspace
